@@ -1,2 +1,2 @@
-FROM maven:3.2-jdk-7-onbuild
+FROM maven:3.3.9-jdk-8
 CMD ["./mvnw spring-boot:run"]
