@@ -1,12 +1,25 @@
 package hello;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.SpringApplication;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 public class Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+    private static ApplicationContext springContext = null;
+    private static ApplicationContext getSpringContext() {
+        if (springContext == null) {
+            synchronized (ApplicationContext.class) {
+                if (springContext == null) {
+                    springContext = new ClassPathXmlApplicationContext("/application-context.xml");
+                    
+                }
+            }
+        }
+        return springContext;
+    }
+    public static <T> T getBean(Class<T> clazz) {
+        return getSpringContext().getBean(clazz);
     }
 }
